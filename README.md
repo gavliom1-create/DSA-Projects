@@ -1,250 +1,164 @@
 # Music Playlist Manager Using Doubly Linked List
 
-## 1. Project Overview
+## Project Overview
 
-The Music Playlist Manager is a menu-driven application developed using C++. It uses a Doubly Linked List data structure to store and manage songs.
+The Music Playlist Manager is a menu-driven C++ program that manages a list of songs using a **doubly linked list**. Each song stores its title and artist name, along with pointers to the previous and next songs.
 
-Each song node stores the song title, artist name, pointer to the previous song, and pointer to the next song. This structure supports traversal in both forward and backward directions.
+This is a console-based simulation. It displays song information and simulates playlist navigation; it does not play actual audio files.
 
-## 2. Objectives
+## Features
 
-- To understand the implementation of a Doubly Linked List in C++.
-- To perform insertion and deletion operations on song nodes.
-- To display the playlist in forward and reverse order.
-- To navigate between the current, next, and previous songs.
-- To understand dynamic memory allocation and pointer manipulation.
+- Add a song with its title and artist name.
+- Delete a song by entering its title.
+- Display the playlist in forward order.
+- Display the playlist in reverse order.
+- Show the current song.
+- Move to the next song or previous song.
+- Display every song in the playlist in sequence.
+- Simulate one cycle of the Repeat All feature.
+- Handle an empty playlist and invalid menu input.
+- Support song titles and artist names containing spaces.
+- Release dynamically allocated song nodes when the playlist object is destroyed.
 
-## 3. Technologies Used
+## Data Structure Used
 
-- **Programming Language:** C++
-- **Data Structure:** Doubly Linked List
-- **IDE:** Visual Studio Code
-- **Version Control:** Git and GitHub
+### Doubly Linked List
 
-## 4. Features
+Each node represents one song and contains:
 
-1. Add a song to the playlist.
-2. Delete a song by title.
-3. Display the playlist in forward order.
-4. Display the playlist in reverse order.
-5. Show the current song.
-6. Navigate to the next song.
-7. Navigate to the previous song.
-8. Exit the program.
+- `title`: the song's title.
+- `artist`: the artist's name.
+- `prev`: pointer to the previous song node.
+- `next`: pointer to the next song node.
 
-**Note:** The menu options for playing the complete playlist and repeating all songs are currently placeholders and require further implementation.
+The `Playlist` class maintains a `head` pointer to the first song and a `current` pointer to the current song.
 
-## 5. Doubly Linked List Node Structure
-
-Each song is represented by a node containing four members:
-
-- `prev`: Pointer to the previous song.
-- `title`: Stores the song title.
-- `artist`: Stores the artist name.
-- `next`: Pointer to the next song.
-
-### Node Diagram
+Example structure:
 
 ```text
-+----------+----------------------+----------+
-|   prev   | Song Information     |   next   |
-+----------+----------------------+----------+
-             | title              |
-             | artist             |
-             +--------------------+
+NULL <- [Song A] <-> [Song B] <-> [Song C] -> NULL
+          head                         last
 ```
 
-### Example Playlist
+The `prev` and `next` pointers allow traversal in both directions.
 
-```text
-NULL
-  |
-  v
-+----------+----------------+----------+
-|   NULL   | Shape of You    |    *     |
-+----------+----------------+----------+
-                                      |
-                                      v
-+----------+----------------+----------+
-|    *     | Perfect         |    *     |
-+----------+----------------+----------+
-             ^                        |
-             |                        v
-+----------+----------------+----------+
-|    *     | Believer        |   NULL   |
-+----------+----------------+----------+
-```
+## Menu Options
 
-Here, each `*` represents a pointer to a neighboring node. The first node has no previous node, and the last node has no next node.
+| Option | Operation | Description |
+|---|---|---|
+| 1 | Add Song | Adds a song title and artist to the end of the playlist. |
+| 2 | Delete Song | Deletes the song matching the entered title. |
+| 3 | Display Playlist Forward | Displays songs from first to last. |
+| 4 | Display Playlist Reverse | Displays songs from last to first. |
+| 5 | Play Current Song | Displays the current song. |
+| 6 | Play Next Song | Moves to the next song if one exists. |
+| 7 | Play Previous Song | Moves to the previous song if one exists. |
+| 8 | Play Complete Playlist | Displays all songs in forward order and updates the current pointer as it goes. |
+| 9 | Repeat All | Simulates one full cycle and resets the current song to the first song. |
+| 10 | Show Current Song | Displays the current song. |
+| 11 | Exit | Closes the program. |
 
-## 6. Block Diagram
+## Requirements
 
-```mermaid
-flowchart TD
-    A[User] --> B[Menu Driven Interface]
-    B --> C[Read User Choice]
-    C --> D{Select Operation}
-    D --> E[Insert Song]
-    D --> F[Delete Song]
-    D --> G[Forward Display]
-    D --> H[Reverse Display]
-    D --> I[Song Navigation]
-    E --> J[Doubly Linked List]
-    F --> J
-    G --> J
-    H --> J
-    I --> J
-    J --> K[Song Nodes]
-    K --> L[Display Result]
-    L --> B
-```
+- A C++ compiler such as GCC or MinGW.
+- Visual Studio Code or another C++ editor (optional).
+- C++11 or later; the provided compile command uses C++17.
 
-## 7. Program Flowchart
+## How to Compile and Run
 
-```mermaid
-flowchart TD
-    A([Start]) --> B[Create Playlist Object]
-    B --> C[Display Menu]
-    C --> D[Read Choice]
-    D --> E{Choice}
-    E -->|1| F[Add Song]
-    E -->|2| G[Delete Song]
-    E -->|3| H[Display Forward]
-    E -->|4| I[Display Reverse]
-    E -->|5| J[Show Current Song]
-    E -->|6| K[Play Next Song]
-    E -->|7| L[Play Previous Song]
-    E -->|8 or 9| M[Feature Not Implemented]
-    E -->|10| J
-    E -->|11| N([Exit])
-    E -->|Other| O[Invalid Choice]
-    F --> C
-    G --> C
-    H --> C
-    I --> C
-    J --> C
-    K --> C
-    L --> C
-    M --> C
-    O --> C
-```
+### Using the terminal
 
-## 8. Algorithms
-
-### A. Insertion Algorithm
-
-1. Create a new song node.
-2. If the playlist is empty, set `head` and `current` to the new node.
-3. Otherwise, traverse the list to the last node.
-4. Set the last node's `next` pointer to the new node.
-5. Set the new node's `prev` pointer to the last node.
-
-### B. Deletion Algorithm
-
-1. Search for the node containing the specified song title.
-2. If the song is not found, report that it does not exist.
-3. If the song is the first node, update `head`.
-4. Otherwise, reconnect the previous and next nodes.
-5. Delete the selected node and update any affected pointers.
-
-**Implementation note:** The current `remove()` function needs correction before all deletion cases can be considered reliable.
-
-### C. Forward Traversal Algorithm
-
-1. Start from `head`.
-2. Display the title of the current node.
-3. Move to the next node using `next`.
-4. Continue until the pointer becomes `NULL`.
-
-### D. Reverse Traversal Algorithm
-
-1. Start from `head`.
-2. Move to the last node using `next`.
-3. Display the current node's title.
-4. Move backward using `prev`.
-5. Stop when the pointer becomes `NULL`.
-
-### E. Song Navigation Algorithm
-
-1. Check whether `current` is `NULL`.
-2. If it is `NULL`, display that the playlist is empty.
-3. For next-song navigation, move using `current->next` if available.
-4. For previous-song navigation, move using `current->prev` if available.
-5. Display the selected song.
-
-## 9. Time Complexity
-
-Let `n` represent the number of songs.
-
-| Operation | Time Complexity |
-|---|---|
-| Check empty playlist | O(1) |
-| Insert song at end | O(n) |
-| Delete song by title | O(n) |
-| Display forward | O(n) |
-| Display backward | O(n) |
-| Navigate next/previous | O(1) |
-
-These complexities describe the intended operations; deletion must be corrected to handle all cases safely.
-
-## 10. How to Compile and Run
-
-### Using a C++ Compiler
-
-1. Install a C++ compiler such as GCC.
-2. Open a terminal in the project folder.
+1. Save the source code as `menudriven_corrected.cpp`.
+2. Open a terminal in the folder containing the file.
 3. Compile the program:
 
-```bash
-g++ menudriven.cpp -o playlist
-```
+   ```bash
+   g++ -std=c++17 menudriven_corrected.cpp -o music
+   ```
 
-4. Run the program on Windows:
+4. Run it on Windows:
 
-```bash
-playlist.exe
-```
+   ```powershell
+   .\music.exe
+   ```
 
-If necessary, run it from Command Prompt using:
+   On Linux or macOS, run:
 
-```bash
-.\playlist.exe
-```
+   ```bash
+   ./music
+   ```
 
-## 11. Sample Menu
+### Using VS Code
+
+Open the project folder in VS Code, open the terminal in that folder, and run the compile and run commands above. Ensure that a C++ compiler is installed and available in the terminal's PATH.
+
+## Algorithm Summary
+
+### Add Song
+
+1. Create a new song node.
+2. If the playlist is empty, set both `head` and `current` to the new node.
+3. Otherwise, traverse to the last node.
+4. Connect the last node's `next` pointer to the new node and the new node's `prev` pointer to the last node.
+
+### Delete Song
+
+1. Search for the node with the requested title.
+2. If it is not found, display a message.
+3. Otherwise, reconnect the previous and next nodes, updating `head` when the first node is deleted.
+4. If the deleted node was the current song, move `current` to the next song if available; otherwise, move it to the previous song.
+5. Delete the node from memory.
+
+### Display in Reverse
+
+1. Start at `head`.
+2. Follow `next` pointers until the last node is reached.
+3. Print each song while following `prev` pointers back to the beginning.
+
+## Complexity Analysis
+
+Let `n` be the number of songs in the playlist.
+
+| Operation | Time Complexity | Reason |
+|---|---|---|
+| Add Song | O(n) | The program traverses to the last node. |
+| Delete Song | O(n) | It may search through the playlist for the title. |
+| Display Forward | O(n) | Each node is visited once. |
+| Display Reverse | O(n) | It traverses to the end and then visits each node in reverse. |
+| Play Next / Previous | O(1) | It follows one pointer after boundary checks. |
+| Play Complete Playlist | O(n) | Each song is displayed once. |
+| Repeat All | O(n) | One simulated cycle visits each song once. |
+
+Each song node requires **O(1)** additional storage, so total playlist storage is **O(n)**.
+
+## Limitations
+
+- The program simulates playback by printing song details; it does not play audio.
+- Song deletion matches the title exactly and removes the first matching title.
+- Repeat All runs for one simulated cycle and then resets the current song to the first song; it does not loop forever.
+- The playlist is stored in memory and is not saved to a file, so songs are lost when the program exits.
+
+## Learning Outcomes
+
+This project demonstrates:
+
+- Classes and objects in C++.
+- Dynamic memory allocation and deallocation.
+- Doubly linked list insertion, deletion, and traversal.
+- Pointer management and edge-case handling.
+- Menu-driven programming using `switch` and loops.
+
+## Repository Files
+
+A simple GitHub repository can contain:
 
 ```text
-===== MUSIC PLAYLIST =====
-1. Add Song
-2. Delete Song
-3. Display Playlist in Forward
-4. Display Playlist in Reverse
-5. Play Current Song
-6. Play Next Song
-7. Play Previous Song
-8. Play Complete Playlist
-9. Repeat All
-10. Show Current Song
-11. Exit
-
-Enter your choice:
+Music-Playlist-Manager/
+├── menudriven_corrected.cpp
+├── README.md
+└── output-screenshot.png   (optional: add a screenshot of the program running)
 ```
 
-## 12. Limitations and Future Improvements
+## Author
 
-- Correct deletion for empty, single-node, first-node, middle-node, and last-node cases.
-- Update the current-song pointer safely after deletion.
-- Add support for song titles and artist names containing spaces.
-- Implement complete-playlist playback.
-- Implement repeat-all functionality.
-- Add song searching and playlist saving to a file.
-- Improve input validation and empty-playlist handling.
-
-## 13. Conclusion
-
-The Music Playlist Manager demonstrates the practical use of a Doubly Linked List in C++. It helps develop an understanding of nodes, pointers, insertion, deletion, and bidirectional traversal. The project provides a foundation for developing more advanced playlist management applications.
-
-## 14. Author
-
-Developed as a Data Structures and Algorithms case study using C++.
-
+Add your name, class, department, and college details here if required for your submission.
