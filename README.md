@@ -256,6 +256,8 @@ On Linux:
 
 ## 13. Output Screenshots
 
+## 13. Output Screenshots
+
 ### 1. Add Song
 ![Add Song](screenshots/add%20song.png.png)
 
