@@ -254,26 +254,25 @@ On Linux:
 
 ## 12. Sample Output
 
-```text
-===== MUSIC PLAYLIST =====
-1. Add Song
-2. Delete Song
-3. Display Playlist Forward
-4. Display Playlist Reverse
-5. Play Current Song
-6. Play Next Song
-7. Play Previous Song
-8. Play Complete Playlist
-9. Repeat All (one simulated cycle)
-10. Show Current Song
-11. Exit
+## 13. Output Screenshots
 
-Enter your choice: 1
+### 1. Add Song
+![Add Song](screenshots/add%20song.png.png)
 
-Enter song title: Perfect
-Enter artist name: Ed Sheeran
-Song added successfully.
-```
+### 2. Complete Playlist
+![Complete Playlist](screenshots/complete%20playlist.png.png)
+
+### 3. Current Song
+![Current Song](screenshots/current%20song.png.png)
+
+### 4. Delete Song
+![Delete Song](screenshots/delete%20song.png.png)
+
+### 5. Forward Playlist
+![Forward Playlist](screenshots/playlist%20forward.png.png)
+
+
+
 
 ## 13. Advantages
 
